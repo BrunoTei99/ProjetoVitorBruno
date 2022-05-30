@@ -1,0 +1,45 @@
+[{
+    "id": "1",
+    "name": "Almeida",
+    "deliveryFee": 1.40,
+    "minDeliveryTime": 25,
+    "maxDeliveryTime": 35,
+    "address": "rua do conde",
+    "lat": 46.86190499528364,
+    "lng": 28.54437769418778,
+    "phoneNumber": "966143775"
+},
+{
+    "id": "2",
+    "name": "barruca",
+    "deliveryFee": 1.40,
+    "minDeliveryTime": 25,
+    "maxDeliveryTime": 35,
+    "address": "rua do lugar",
+    "lat": 46.86190499528364,
+    "lng": 28.54437769418778,
+    "phoneNumber": "966147765"
+},
+{
+    "id": "3",
+    "name": "belinda",
+    "deliveryFee": 1.40,
+    "minDeliveryTime": 25,
+    "maxDeliveryTime": 35,
+    "address": "rua do sitio",
+    "lat": 46.86190499528364,
+    "lng": 28.54437769418778,
+    "phoneNumber": "966147765"
+},
+{
+    "id": "4",
+    "name": "farmacia do stio",
+    "deliveryFee": 1.40,
+    "minDeliveryTime": 25,
+    "maxDeliveryTime": 35,
+    "address": "rua do bom dua",
+    "lat": 46.86190499528364,
+    "lng": 28.54437769418778,
+    "phoneNumber": "966147765"
+}
+]

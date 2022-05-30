@@ -1,0 +1,7 @@
+{
+    "AppSyncApiName": "myfarma",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "S3DeploymentBucket": "amplify-myfarma-staging-112721-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/294330e93fdb23b4485b91e006107e5b823778b3"
+}

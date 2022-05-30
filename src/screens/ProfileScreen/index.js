@@ -1,0 +1,104 @@
+import { View, Text, TextInput, StyleSheet, Button, Alert } from "react-native";
+import React, { useEffect, useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { DataStore } from "aws-amplify";
+import { User } from "../../models";
+
+import { useNavigation } from "@react-navigation/native";
+
+//AUTHENTICATION
+
+import { Auth } from "aws-amplify";
+import { useAuthContext } from "../../contexts/AuthContext";
+
+const Profile = () => {
+  const { dbUser } = useAuthContext();
+
+  const [name, setName] = useState(dbUser?.name || "");
+  const [address, setAddress] = useState(dbUser?.address || "");
+  const { sub, setDbUser } = useAuthContext();
+
+  const navigation = useNavigation();
+  const onSave = async () => {
+    //save in data store
+    if (dbUser) {
+      await updateUser();
+    } else {
+      await createUser();
+    }
+    navigation.goBack();
+  };
+
+  const updateUser = async () => {
+    try {
+      const user = await DataStore.save(
+        User.copyOf(dbUser, (updated) => {
+          updated.name = name;
+          updated.address = address;
+        })
+      );
+      setDbUser(user);
+    } catch (e) {
+      Alert.alert("error", e.message);
+    }
+  };
+
+  const createUser = async () => {
+    try {
+      const user = await DataStore.save(
+        new User({
+          name,
+          sub,
+          address,
+        })
+      );
+      setDbUser(user);
+    } catch (e) {
+      Alert.alert("error", e.message);
+    }
+  };
+
+  return (
+    <SafeAreaView>
+      <Text style={styles.title}>Profile</Text>
+      <TextInput
+        value={name}
+        onChangeText={setName}
+        placeholder="Name"
+        style={styles.input}
+      />
+      <TextInput
+        value={address}
+        onChangeText={setAddress}
+        placeholder="Address"
+        style={styles.input}
+      />
+
+      <Button onPress={onSave} title="Save" />
+
+      <Text
+        onPress={() => Auth.signOut()}
+        style={{ textAlign: "center", color: "red", margin: 10 }}
+      >
+        Sign Out
+      </Text>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+    margin: 10,
+  },
+  input: {
+    margin: 10,
+    backgroundColor: "white",
+    padding: 15,
+    borderRadius: 5,
+  },
+});
+
+export default Profile;

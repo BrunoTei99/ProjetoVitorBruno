@@ -1,0 +1,87 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-myfarma-staging-112721-authRole",
+      "UnauthRoleArn": "arn:aws:iam::342946278597:role/amplify-myfarma-staging-112721-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::342946278597:role/amplify-myfarma-staging-112721-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-myfarma-staging-112721-deployment",
+      "UnauthRoleName": "amplify-myfarma-staging-112721-unauthRole",
+      "StackName": "amplify-myfarma-staging-112721",
+      "StackId": "arn:aws:cloudformation:eu-central-1:342946278597:stack/amplify-myfarma-staging-112721/7a474670-db54-11ec-bc81-02966acfb8e0",
+      "AmplifyAppId": "d2icz4de9fk9qn"
+    }
+  },
+  "auth": {
+    "myfarma": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "signupAttributes": [],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 6,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "output": {
+        "UserPoolId": "eu-central-1_GjuIH6ouI",
+        "AppClientIDWeb": "48g6qkekfs4drco6b83qu5tss",
+        "AppClientID": "5kongek99ic9abi34437csr1ia",
+        "IdentityPoolId": "eu-central-1:56a57ff9-a677-4ffe-a809-163df3c5fe6a",
+        "UserPoolArn": "arn:aws:cognito-idp:eu-central-1:342946278597:userpool/eu-central-1_GjuIH6ouI",
+        "IdentityPoolName": "testAuthIdentityPool__staging",
+        "UserPoolName": "myfarma"
+      },
+      "lastPushTimeStamp": "2022-05-29T10:41:35.066Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-myfarma-staging-112721-deployment/amplify-cfn-templates/auth/myfarma-cloudformation-template.json",
+        "logicalId": "authmyfarma"
+      }
+    }
+  },
+  "api": {
+    "myfarma": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
+        },
+        "GraphQLAPIIdOutput": "hztyzh5jubetjmnsdfe5glcfbe",
+        "GraphQLAPIEndpointOutput": "https://ev4ckntag5ch7atqkds3mcglom.appsync-api.eu-central-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-ik6c7oig4zeujpzclpleliwwki"
+      },
+      "lastPushTimeStamp": "2022-05-29T10:41:35.110Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-myfarma-staging-112721-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apimyfarma"
+      },
+      "lastPushDirHash": "DNfwWdim7RkLamSnHOcgJ9klcbY="
+    }
+  }
+}

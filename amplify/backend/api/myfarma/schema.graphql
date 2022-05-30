@@ -1,0 +1,30 @@
+type Receita @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  number: ID!
+  pinAcesso: ID!
+  pinOpcao: ID!
+  date: String!
+}
+
+type Order @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  userID: ID! @index(name: "byUser")
+  Farmacia: Farmacia @hasOne
+  Receita: Receita @hasOne
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  sub: String!
+  address: String!
+  Orders: [Order] @hasMany(indexName: "byUser", fields: ["id"])
+}
+
+type Farmacia @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  phoneNumber: String!
+  address: String!
+}
+ 

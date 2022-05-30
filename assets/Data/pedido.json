@@ -1,0 +1,29 @@
+[{
+    "id": "1",
+    "nomeFarmacia":" almeida" ,
+    "estado": "em distribuicao",
+    "data": "2020-04-21"
+},
+{
+    "id": "2",
+    "nomeFarmacia":"seixas" ,
+    "estado": "em distribuicao",
+    "data": "2020-04-21"
+   
+   
+},
+{
+    "id": "3",
+    "nomeFarmacia":"nova" ,
+    "estado": "em distribuicao",
+    "data": "2020-04-21"
+    
+   
+},
+{
+    "id": "3",
+    "nomeFarmacia":"novissima" ,
+    "estado": "em distribuicao",
+    "data": "2020-04-21"   
+}
+]

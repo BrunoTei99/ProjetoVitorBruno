@@ -1,0 +1,377 @@
+
+type Receita @aws_iam @aws_api_key {
+  id: ID!
+  number: ID!
+  pinAcesso: ID!
+  pinOpcao: ID!
+  date: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type Order @aws_iam @aws_api_key {
+  id: ID!
+  userID: ID!
+  Farmacia: Farmacia
+  Receita: Receita
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  orderFarmaciaId: ID
+  orderReceitaId: ID
+}
+
+type User @aws_iam @aws_api_key {
+  id: ID!
+  name: String!
+  sub: String!
+  address: String!
+  Orders(filter: ModelOrderFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelOrderConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type Farmacia @aws_iam @aws_api_key {
+  id: ID!
+  name: String!
+  phoneNumber: String!
+  address: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelReceitaConnection @aws_api_key @aws_iam {
+  items: [Receita]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelReceitaFilterInput {
+  id: ModelIDInput
+  number: ModelIDInput
+  pinAcesso: ModelIDInput
+  pinOpcao: ModelIDInput
+  date: ModelStringInput
+  and: [ModelReceitaFilterInput]
+  or: [ModelReceitaFilterInput]
+  not: ModelReceitaFilterInput
+}
+
+type Query {
+  getReceita(id: ID!): Receita @aws_api_key @aws_iam
+  listReceitas(filter: ModelReceitaFilterInput, limit: Int, nextToken: String): ModelReceitaConnection @aws_api_key @aws_iam
+  syncReceitas(filter: ModelReceitaFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelReceitaConnection @aws_api_key @aws_iam
+  getOrder(id: ID!): Order @aws_api_key @aws_iam
+  listOrders(filter: ModelOrderFilterInput, limit: Int, nextToken: String): ModelOrderConnection @aws_api_key @aws_iam
+  syncOrders(filter: ModelOrderFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelOrderConnection @aws_api_key @aws_iam
+  getUser(id: ID!): User @aws_api_key @aws_iam
+  listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection @aws_api_key @aws_iam
+  syncUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelUserConnection @aws_api_key @aws_iam
+  getFarmacia(id: ID!): Farmacia @aws_api_key @aws_iam
+  listFarmacias(filter: ModelFarmaciaFilterInput, limit: Int, nextToken: String): ModelFarmaciaConnection @aws_api_key @aws_iam
+  syncFarmacias(filter: ModelFarmaciaFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelFarmaciaConnection @aws_api_key @aws_iam
+}
+
+input ModelReceitaConditionInput {
+  number: ModelIDInput
+  pinAcesso: ModelIDInput
+  pinOpcao: ModelIDInput
+  date: ModelStringInput
+  and: [ModelReceitaConditionInput]
+  or: [ModelReceitaConditionInput]
+  not: ModelReceitaConditionInput
+}
+
+input CreateReceitaInput {
+  id: ID
+  number: ID!
+  pinAcesso: ID!
+  pinOpcao: ID!
+  date: String!
+  _version: Int
+}
+
+input UpdateReceitaInput {
+  id: ID!
+  number: ID
+  pinAcesso: ID
+  pinOpcao: ID
+  date: String
+  _version: Int
+}
+
+input DeleteReceitaInput {
+  id: ID!
+  _version: Int
+}
+
+type Mutation {
+  createReceita(input: CreateReceitaInput!, condition: ModelReceitaConditionInput): Receita @aws_api_key @aws_iam
+  updateReceita(input: UpdateReceitaInput!, condition: ModelReceitaConditionInput): Receita @aws_api_key @aws_iam
+  deleteReceita(input: DeleteReceitaInput!, condition: ModelReceitaConditionInput): Receita @aws_api_key @aws_iam
+  createOrder(input: CreateOrderInput!, condition: ModelOrderConditionInput): Order @aws_api_key @aws_iam
+  updateOrder(input: UpdateOrderInput!, condition: ModelOrderConditionInput): Order @aws_api_key @aws_iam
+  deleteOrder(input: DeleteOrderInput!, condition: ModelOrderConditionInput): Order @aws_api_key @aws_iam
+  createUser(input: CreateUserInput!, condition: ModelUserConditionInput): User @aws_api_key @aws_iam
+  updateUser(input: UpdateUserInput!, condition: ModelUserConditionInput): User @aws_api_key @aws_iam
+  deleteUser(input: DeleteUserInput!, condition: ModelUserConditionInput): User @aws_api_key @aws_iam
+  createFarmacia(input: CreateFarmaciaInput!, condition: ModelFarmaciaConditionInput): Farmacia @aws_api_key @aws_iam
+  updateFarmacia(input: UpdateFarmaciaInput!, condition: ModelFarmaciaConditionInput): Farmacia @aws_api_key @aws_iam
+  deleteFarmacia(input: DeleteFarmaciaInput!, condition: ModelFarmaciaConditionInput): Farmacia @aws_api_key @aws_iam
+}
+
+type Subscription {
+  onCreateReceita: Receita @aws_subscribe(mutations: ["createReceita"]) @aws_api_key @aws_iam
+  onUpdateReceita: Receita @aws_subscribe(mutations: ["updateReceita"]) @aws_api_key @aws_iam
+  onDeleteReceita: Receita @aws_subscribe(mutations: ["deleteReceita"]) @aws_api_key @aws_iam
+  onCreateOrder: Order @aws_subscribe(mutations: ["createOrder"]) @aws_api_key @aws_iam
+  onUpdateOrder: Order @aws_subscribe(mutations: ["updateOrder"]) @aws_api_key @aws_iam
+  onDeleteOrder: Order @aws_subscribe(mutations: ["deleteOrder"]) @aws_api_key @aws_iam
+  onCreateUser: User @aws_subscribe(mutations: ["createUser"]) @aws_api_key @aws_iam
+  onUpdateUser: User @aws_subscribe(mutations: ["updateUser"]) @aws_api_key @aws_iam
+  onDeleteUser: User @aws_subscribe(mutations: ["deleteUser"]) @aws_api_key @aws_iam
+  onCreateFarmacia: Farmacia @aws_subscribe(mutations: ["createFarmacia"]) @aws_api_key @aws_iam
+  onUpdateFarmacia: Farmacia @aws_subscribe(mutations: ["updateFarmacia"]) @aws_api_key @aws_iam
+  onDeleteFarmacia: Farmacia @aws_subscribe(mutations: ["deleteFarmacia"]) @aws_api_key @aws_iam
+}
+
+type ModelOrderConnection @aws_api_key @aws_iam {
+  items: [Order]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelOrderFilterInput {
+  id: ModelIDInput
+  userID: ModelIDInput
+  and: [ModelOrderFilterInput]
+  or: [ModelOrderFilterInput]
+  not: ModelOrderFilterInput
+  orderFarmaciaId: ModelIDInput
+  orderReceitaId: ModelIDInput
+}
+
+input ModelOrderConditionInput {
+  userID: ModelIDInput
+  and: [ModelOrderConditionInput]
+  or: [ModelOrderConditionInput]
+  not: ModelOrderConditionInput
+  orderFarmaciaId: ModelIDInput
+  orderReceitaId: ModelIDInput
+}
+
+input CreateOrderInput {
+  id: ID
+  userID: ID!
+  _version: Int
+  orderFarmaciaId: ID
+  orderReceitaId: ID
+}
+
+input UpdateOrderInput {
+  id: ID!
+  userID: ID
+  _version: Int
+  orderFarmaciaId: ID
+  orderReceitaId: ID
+}
+
+input DeleteOrderInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelUserConnection @aws_api_key @aws_iam {
+  items: [User]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelUserFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  sub: ModelStringInput
+  address: ModelStringInput
+  and: [ModelUserFilterInput]
+  or: [ModelUserFilterInput]
+  not: ModelUserFilterInput
+}
+
+input ModelUserConditionInput {
+  name: ModelStringInput
+  sub: ModelStringInput
+  address: ModelStringInput
+  and: [ModelUserConditionInput]
+  or: [ModelUserConditionInput]
+  not: ModelUserConditionInput
+}
+
+input CreateUserInput {
+  id: ID
+  name: String!
+  sub: String!
+  address: String!
+  _version: Int
+}
+
+input UpdateUserInput {
+  id: ID!
+  name: String
+  sub: String
+  address: String
+  _version: Int
+}
+
+input DeleteUserInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelFarmaciaConnection @aws_api_key @aws_iam {
+  items: [Farmacia]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelFarmaciaFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  phoneNumber: ModelStringInput
+  address: ModelStringInput
+  and: [ModelFarmaciaFilterInput]
+  or: [ModelFarmaciaFilterInput]
+  not: ModelFarmaciaFilterInput
+}
+
+input ModelFarmaciaConditionInput {
+  name: ModelStringInput
+  phoneNumber: ModelStringInput
+  address: ModelStringInput
+  and: [ModelFarmaciaConditionInput]
+  or: [ModelFarmaciaConditionInput]
+  not: ModelFarmaciaConditionInput
+}
+
+input CreateFarmaciaInput {
+  id: ID
+  name: String!
+  phoneNumber: String!
+  address: String!
+  _version: Int
+}
+
+input UpdateFarmaciaInput {
+  id: ID!
+  name: String
+  phoneNumber: String
+  address: String
+  _version: Int
+}
+
+input DeleteFarmaciaInput {
+  id: ID!
+  _version: Int
+}
+
